@@ -1,0 +1,29 @@
+//Add question
+GET http://localhost:8080/exam/java/add?question=QuestionText&answer=QuestionAnswer
+
+###
+GET http://localhost:8080/exam/java/add?question=QuestionText2&answer=QuestionAnswer2
+
+###
+GET http://localhost:8080/exam/java/add?question=QuestionText3&answer=QuestionAnswer3
+
+###
+GET http://localhost:8080/exam/java/add?question=QuestionText4&answer=QuestionAnswer4
+
+
+//Remove question
+###
+GET http://localhost:8080/exam/java/remove?question=QuestionText&answer=QuestionAnswer
+
+
+//Get all questions
+###
+GET http://localhost:8080/exam/java
+
+
+//Get random questions
+###
+GET http://localhost:8080/exam/get/3
+
+###
+GET http://localhost:8080/exam/get/7
