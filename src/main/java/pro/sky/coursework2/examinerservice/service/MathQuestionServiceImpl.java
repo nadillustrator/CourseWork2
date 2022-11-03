@@ -9,46 +9,38 @@ import pro.sky.coursework2.examinerservice.repositories.QuestionRepository;
 import java.util.*;
 
 @Service
-public class MathQuestionServiceImpl implements QuestionService {
+public class MathQuestionServiceImpl {
 
-    private Random RANDOM = new Random();
+    private Random random = new Random();
+    private char[] signs = {'+', '-', '*', '/'};
 
-    private final QuestionRepository questionsRepository;
-
-    public MathQuestionServiceImpl(@Qualifier("mathQuestionRepositoryImpl") QuestionRepository questionsRepository) {
-        this.questionsRepository = questionsRepository;
-    }
-
-    @Override
-    public Question add(String question, String answer) {
-        return questionsRepository.add(question, answer);
-    }
-
-    @Override
-    public Question add(Question question) {
-        return questionsRepository.add(question);
-    }
-
-    @Override
-    public Question remove(Question question) {
-        return questionsRepository.remove(question);
-    }
-
-    @Override
-    public Collection<Question> getAll() {
-        return questionsRepository.getAll();
-    }
-
-    @Override
     public Question getRandomQuestion() {
-        if (questionsRepository.getAll().isEmpty()) {
-            throw new QuestionNotFoundException("Ни одного вопроса не найдено");
+        int a = random.nextInt(100);
+        int b = random.nextInt(100);
+        int result;
+        int signNum = random.nextInt(signs.length);
+        if (b == 0 && signNum == 3) {
+            signNum = 1;
         }
-        int numberOfQuestion = RANDOM.nextInt(questionsRepository.getAll().size());
-        Question question = getAll().stream()
-                .skip(numberOfQuestion)
-                .filter(Objects::nonNull)
-                .findFirst().get();
+
+        switch (signNum) {
+            case 0:
+                result = a + b;
+                break;
+            case 1:
+                result = a - b;
+                break;
+            case 2:
+                result = a * b;
+                break;
+            case 3:
+                result = a / b;
+                break;
+            default:
+                result = 0;
+        }
+
+        Question question = new Question("" + a + signs[signNum] + b, " =" + result);
         return question;
     }
 

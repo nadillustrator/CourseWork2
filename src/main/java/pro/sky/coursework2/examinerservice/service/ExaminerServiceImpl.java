@@ -23,18 +23,19 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        int size = javaQuestionService.getAll().size() + mathQuestionService.getAll().size();
-        if (amount <= 0 || amount > size) {
-            throw new IncorrectNumberOfRequestedQuestionsException("Некорректное число вопросов");
+        int amountOfJavaQuestions;
+        if (javaQuestionService.getAll().size() > 0) {
+            amountOfJavaQuestions = amount / 2;
+        } else {
+            amountOfJavaQuestions = 0;
         }
 
-        List<Question> allQuestions = new ArrayList<>();
-        allQuestions.addAll(javaQuestionService.getAll());
-        allQuestions.addAll(mathQuestionService.getAll());
-
         Set<Question> result = new HashSet<>();
+        while (result.size() < amountOfJavaQuestions) {
+            result.add(javaQuestionService.getRandomQuestion());
+        }
         while (result.size() < amount) {
-            result.add(allQuestions.get(random.nextInt(allQuestions.size())));
+            result.add(mathQuestionService.getRandomQuestion());
         }
         return result;
     }
